@@ -1260,7 +1260,9 @@ function afterChange(ids){
 })();
 /* ---------- variante hébergée : Supabase, sans compte ---------- */
 const NKEY='hashtag-nom';
+const READONLY=/[?&]lecture\b/.test(location.search);
 async function connectSupabase(SB){
+ if(READONLY)canW=false;
  me=(localStorage.getItem(NKEY)||'').trim()||null;
  let sb;
  try{const m=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');sb=m.createClient(SB.url,SB.key)}catch(e){setMode('err');return}
@@ -1306,7 +1308,7 @@ const num=s=>{const n=parseFloat(String(s).replace(/\s/g,'').replace(',','.'));r
 function renderPage(pid){
  const pg=PAGES.find(p=>p.id===pid);if(!pg)return;
  const hd=document.querySelector('#v-'+pid+' .pj-head');
- if(window.HASHTAG_SUPABASE&&!me&&hd&&!hd.parentNode.querySelector('[data-name]')){hd.insertAdjacentHTML('afterend','<form data-name class="pj-b" style="display:flex;gap:12px;align-items:center;margin-bottom:16px;max-width:1080px"><span style="flex:1">Votre prénom, pour que le groupe sache qui a modifié quoi</span><input name="n" placeholder="Prénom" aria-label="Prénom" style="max-width:200px" required><button class="btn acc">OK</button></form>');}
+ if(window.HASHTAG_SUPABASE&&!me&&canW&&hd&&!hd.parentNode.querySelector('[data-name]')){hd.insertAdjacentHTML('afterend','<form data-name class="pj-b" style="display:flex;gap:12px;align-items:center;margin-bottom:16px;max-width:1080px"><span style="flex:1">Votre prénom, pour que le groupe sache qui a modifié quoi</span><input name="n" placeholder="Prénom" aria-label="Prénom" style="max-width:200px" required><button class="btn acc">OK</button></form>');}
  const box=document.getElementById('pc-'+pid);
  const extra=val('x-'+pid)||[];
  const ids=[...pg.blocks.map(b=>b.id),...extra.map(x=>x.id)];
