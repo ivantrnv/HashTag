@@ -465,6 +465,7 @@ window.HASHTAG_SUPABASE={url:'https://gorhimsemszorydaczrq.supabase.co',key:'sb_
 <div class="navlabel">Documentation</div>
 <a href="#intro" data-v="intro"><svg class="i"><use href="#i-info"/></svg>Introduction</a>
 <a href="#demo" data-v="demo"><svg class="i"><use href="#i-play"/></svg>Démo guidée</a>
+<a href="#strategie" data-v="strategie"><svg class="i"><use href="#i-split"/></svg>Schéma de la solution</a>
 <a href="#bilan" data-v="bilan"><svg class="i"><use href="#i-flag"/></svg>Enjeux et conclusion</a>
 <a href="#livre-blanc" data-v="livre-blanc"><svg class="i"><use href="#i-book"/></svg>Livre blanc</a>
 </nav>
@@ -611,6 +612,188 @@ window.HASHTAG_SUPABASE={url:'https://gorhimsemszorydaczrq.supabase.co',key:'sb_
 <div class="cthx a" style="--d:5000">Merci de votre attention</div></div></div>
 <div class="pbar"><button class="btn sm" id="b-prev" aria-label="Chapitre précédent"><svg class="i" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button><div class="chap" id="bchap"></div><button class="btn sm acc" id="b-next" aria-label="Chapitre suivant"><svg class="i"><use href="#i-arrow"/></svg></button></div></div>
 </section>
+
+<style>
+.st-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--sh);margin-bottom:16px;max-width:1180px}
+.st-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.st-top h2{flex:1}
+.st-sub{color:var(--ink2);margin:0 0 16px;max-width:72ch}
+.st-seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--raise)}
+.st-seg button{border:0;background:none;font:500 13px Geist,sans-serif;color:var(--ink2);height:30px;padding:0 12px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.st-seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.st-seg button svg{width:15px;height:15px}
+.st-svg{width:100%;height:auto;display:block}
+.st-svg text{font-family:Geist,system-ui,sans-serif}
+.st-svg .lbl{font-size:15px;font-weight:500;fill:var(--ink)}
+.st-svg .sm{font-size:12.5px;fill:var(--ink2)}
+.st-svg .xs{font-size:11.5px;fill:var(--mute)}
+.st-svg .ic{fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.st-note{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--raise);font-size:14px;color:var(--ink2)}
+.st-note b{color:var(--ink);font-weight:500}
+.st-note.bad{background:var(--bad-soft)}.st-note.bad b{color:var(--bad)}
+.st-note.ok{background:var(--ok-soft)}.st-note.ok b{color:var(--ok)}
+.st-legend{display:flex;flex-wrap:wrap;gap:20px;margin-top:12px;font-size:13px;color:var(--ink2)}
+.st-legend i{display:inline-block;width:22px;height:0;border-top:2px solid;vertical-align:middle;margin-right:8px}
+.st-gains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.st-gain{border:1px solid var(--line);border-radius:12px;padding:16px}
+.st-gain h3{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:15px}
+.st-gain h3 svg{color:var(--acc)}
+.st-gain p{margin:0 0 6px;font-size:14px;color:var(--ink2)}
+.st-gain p b{font-weight:500;color:var(--ink)}
+.st-one{font-size:18px;line-height:1.5;max-width:72ch;margin:0}
+.st-one b{color:var(--acc);font-weight:500}
+@media(max-width:900px){.st-gains{grid-template-columns:minmax(0,1fr)}}
+</style>
+<section class="view" id="v-strategie">
+<div class="phead"><h1>Schéma de la solution</h1><p>La solution vue du terrain : qui remet la valise, qui la reçoit, qui garde la preuve et qui paie à la fin.</p></div>
+
+<div class="st-card">
+ <div class="st-top"><h2>1. Le relais de la valise</h2>
+  <div class="st-seg" role="group" aria-label="Scénario"><button class="on" data-st="ok"><svg class="i"><use href="#i-check"/></svg>Tout se passe bien</button><button data-st="lost"><svg class="i"><use href="#i-alert"/></svg>La valise se perd</button><button data-st="replay" aria-label="Rejouer"><svg class="i"><use href="#i-replay"/></svg></button></div></div>
+ <p class="st-sub">Comme un relais : à chaque passage, celui qui remet la valise et celui qui la reçoit signent tous les deux. Ces doubles signatures sont rangées dans un registre commun que personne ne peut effacer.</p>
+ <svg class="st-svg" id="st-relay" viewBox="0 0 1100 430" role="img" aria-label="Relais de la valise entre le passager, la compagnie A, la société au sol, la compagnie B et le passager"></svg>
+ <div class="st-note" id="st-relay-note"></div>
+</div>
+
+<div class="st-card">
+ <div class="st-top"><h2>2. Qui fait quoi, qui paie qui</h2></div>
+ <p class="st-sub">Au centre, le réseau commun. Aucune entreprise ne le possède : il appartient au consortium de ses membres. Autour, ce que chaque acteur donne et ce qu'il reçoit.</p>
+ <svg class="st-svg" id="st-eco" viewBox="0 0 1100 540" role="img" aria-label="Écosystème HashTag : compagnies, aéroports, sociétés au sol, IATA, passagers et société HashTag autour du consortium"></svg>
+ <div class="st-legend"><span><i style="border-color:var(--acc)"></i>Argent versé</span><span><i style="border-color:var(--ok)"></i>Ce que l'acteur reçoit</span><span><i style="border-color:var(--mute);border-top-style:dashed"></i>À négocier</span></div>
+</div>
+
+<div class="st-card">
+ <div class="st-top"><h2>3. Ce que ça change pour chacun</h2></div>
+ <div class="st-gains">
+  <div class="st-gain"><h3><svg class="i"><use href="#i-plane"/></svg>Compagnies</h3><p><b>Avant :</b> elles se partagent la facture selon les kilomètres volés, même quand elles n'y sont pour rien.</p><p><b>Avec HashTag :</b> chacune ne paie que les valises qu'elle a vraiment perdues.</p></div>
+  <div class="st-gain"><h3><svg class="i"><use href="#i-truck"/></svg>Aéroports et sociétés au sol</h3><p><b>Avant :</b> accusés sans preuve quand une valise disparaît au tri.</p><p><b>Avec HashTag :</b> ils prouvent qu'ils ont bien remis la valise, et voient où leurs tapis en perdent.</p></div>
+  <div class="st-gain"><h3><svg class="i"><use href="#i-user"/></svg>Passagers</h3><p><b>Avant :</b> ils attendent pendant que les compagnies se renvoient la faute.</p><p><b>Avec HashTag :</b> le responsable est connu tout de suite, le dossier avance plus vite.</p></div>
+ </div>
+</div>
+
+<div class="st-card">
+ <p class="st-one">En une phrase : <b>chaque main qui touche la valise signe</b>, le registre commun garde ces signatures, et <b>le dernier à l'avoir reçue sans la remettre paie</b>.</p>
+</div>
+</section>
+<script>
+(()=>{
+const NS='http://www.w3.org/2000/svg';
+const ACT=[{n:'Passager',s:'dépose sa valise',ic:'i-user',x:90},{n:'Compagnie A',s:'vol 1, Lyon → Francfort',ic:'i-plane',x:320},{n:'Société au sol',s:'correspondance au hub',ic:'i-truck',x:550},{n:'Compagnie B',s:'vol 2, Francfort → Tokyo',ic:'i-plane',x:780},{n:'Passager',s:'récupère sa valise',ic:'i-user',x:1010}];
+const Y=120,BAND=330;
+const svg=document.getElementById('st-relay'),note=document.getElementById('st-relay-note');
+let mode='ok',raf=0,t0=0;
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+const tx=(s,x,y,c,p,anchor='middle')=>{const e=el('text',{x,y,class:c,'text-anchor':anchor},p);e.textContent=s;return e};
+function icon(id,x,y,s,color,p){const g=el('svg',{x:x-s/2,y:y-s/2,width:s,height:s,viewBox:'0 0 24 24',class:'ic',stroke:color},p);el('use',{href:'#'+id},g);return g}
+function build(){
+ svg.innerHTML='';
+ // ligne du relais
+ el('line',{x1:ACT[0].x,x2:ACT[4].x,y1:Y,y2:Y,stroke:'var(--line)','stroke-width':2});
+ // registre commun
+ el('rect',{x:40,y:BAND,width:1020,height:64,rx:14,fill:'var(--acc-soft)',stroke:'color-mix(in srgb,var(--acc) 30%,transparent)'});
+ icon('i-shield',76,BAND+32,22,'var(--acc)');
+ tx('Registre commun HashTag',98,BAND+28,'lbl',svg,'start').setAttribute('fill','var(--acc)');
+ tx('Chaque remise y est rangée avec deux signatures. Personne ne peut la modifier ni l\'effacer.',98,BAND+48,'sm',svg,'start');
+ ACT.forEach((a,i)=>{
+  const g=el('g',{id:'st-a'+i});
+  el('circle',{cx:a.x,cy:Y,r:42,fill:'var(--card)',stroke:'var(--line)','stroke-width':2,class:'ring'},g);
+  icon(a.ic,a.x,Y,28,'var(--ink2)',g);
+  tx(a.n,a.x,Y+68,'lbl',g);tx(a.s,a.x,Y+86,'xs',g);
+ });
+ for(let i=0;i<4;i++){
+  const x=(ACT[i].x+ACT[i+1].x)/2,g=el('g',{id:'st-h'+i,opacity:.35});
+  el('rect',{x:x-52,y:Y-62,width:104,height:40,rx:8,fill:'var(--card)',stroke:'var(--line)',class:'hb'},g);
+  tx('remet',x-24,Y-46,'xs',g);tx('reçoit',x+24,Y-46,'xs',g);
+  el('circle',{cx:x-24,cy:Y-33,r:5,fill:'var(--line)',class:'s1'},g);el('circle',{cx:x+24,cy:Y-33,r:5,fill:'var(--line)',class:'s2'},g);
+  el('line',{x1:x,x2:x,y1:Y+4,y2:BAND-6,stroke:'var(--acc)','stroke-width':1.5,'stroke-dasharray':'4 4',class:'drop',opacity:0},g);
+  const pr=el('g',{class:'proof',opacity:0},g);
+  el('rect',{x:x-34,y:BAND-4-26,width:68,height:22,rx:6,fill:'var(--card)',stroke:'var(--acc)'},pr);
+  tx('preuve '+(i+1),x,BAND-4-11,'xs',pr).setAttribute('fill','var(--acc)');
+ }
+ // valise
+ const v=el('g',{id:'st-bag'});
+ el('rect',{x:-15,y:-13,width:30,height:24,rx:5,fill:'var(--acc)'},v);
+ el('path',{d:'M-6 -13v-4h12v4',fill:'none',stroke:'var(--acc)','stroke-width':2},v);
+ el('text',{x:0,y:5,'text-anchor':'middle','font-size':11,fill:'#fff','font-weight':600},v).textContent='LY01';
+ // zone verdict (mode perte)
+ const vd=el('g',{id:'st-verdict',opacity:0});
+ el('rect',{x:440,y:216,width:220,height:52,rx:10,fill:'var(--bad-soft)',stroke:'color-mix(in srgb,var(--bad) 35%,transparent)'},vd);
+ tx('Dernière réception sans remise',550,237,'sm',vd).setAttribute('fill','var(--bad)');
+ tx('→ c\'est elle qui paie',550,256,'lbl',vd).setAttribute('fill','var(--bad)');
+}
+const H=['Le passager remet sa valise à la compagnie A au comptoir : les deux signent.','La compagnie A remet la valise à la société au sol du hub : les deux signent.','La société au sol remet la valise à la compagnie B : les deux signent.','La compagnie B rend la valise au passager à l\'arrivée : les deux signent.'];
+function setNote(c,b,t){note.className='st-note '+c;note.innerHTML='';const s=document.createElement('b');s.textContent=b;note.append(s,' '+t)}
+function light(i,stage){const h=document.getElementById('st-h'+i);if(!h)return;h.setAttribute('opacity',1);
+ if(stage>=1)h.querySelector('.s1').setAttribute('fill','var(--ok)');
+ if(stage>=2){h.querySelector('.s2').setAttribute('fill','var(--ok)');h.querySelector('.hb').setAttribute('stroke','color-mix(in srgb,var(--ok) 45%,transparent)');h.querySelector('.drop').setAttribute('opacity',1);h.querySelector('.proof').setAttribute('opacity',1)}}
+function play(){
+ cancelAnimationFrame(raf);build();t0=performance.now();
+ const bag=document.getElementById('st-bag'),SEG=1900,stop=mode==='lost'?2:4;
+ setNote('', 'Départ.','Le passager dépose sa valise.');
+ const step=now=>{
+  const t=Math.max(0,(now-t0)/SEG),i=Math.min(Math.floor(t),stop),f=Math.min(1,t-i);
+  let x;
+  if(i>=stop){x=ACT[stop].x}else{const e=f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2;x=ACT[i].x+(ACT[i+1].x-ACT[i].x)*e}
+  bag.setAttribute('transform',`translate(${x},${Y-90+(i>=stop?0:-Math.sin(f*Math.PI)*10)})`);
+  for(let k=0;k<Math.min(i,stop);k++)light(k,2);
+  if(i<stop){light(i,f>.15?1:0);if(f>.85)light(i,2);setNote('',`Passage ${i+1}.`,H[i])}
+  if(i>=stop){
+   if(mode==='ok'){setNote('ok','Valise livrée.','Quatre remises, quatre preuves dans le registre. Rien à régler.');document.getElementById('st-a4').querySelector('.ring').setAttribute('stroke','var(--ok)');return}
+   // perte : la société au sol a reçu mais n'a jamais remis
+   const r=document.getElementById('st-a2').querySelector('.ring');r.setAttribute('stroke','var(--bad)');
+   const h=document.getElementById('st-h2');h.setAttribute('opacity',1);h.querySelector('.hb').setAttribute('stroke','var(--bad)');h.querySelector('.hb').setAttribute('fill','var(--bad-soft)');
+   bag.setAttribute('opacity',Math.max(.15,1-(t-stop)*.8));
+   document.getElementById('st-verdict').setAttribute('opacity',Math.min(1,(t-stop)*1.5));
+   setNote('bad','Valise perdue au hub.','La société au sol a signé la réception, mais personne n\'a signé de remise après elle. Le registre la désigne : c\'est elle, ou la compagnie qui l\'emploie, qui paie. Les autres n\'ont rien à prouver.');
+   if(t-stop>1.2)return;
+  }
+  raf=requestAnimationFrame(step)};
+ raf=requestAnimationFrame(step);
+}
+document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{
+ if(b.dataset.st!=='replay'){mode=b.dataset.st;document.querySelectorAll('[data-st="ok"],[data-st="lost"]').forEach(x=>x.classList.toggle('on',x===b))}
+ play()});
+
+/* ---------- écosystème ---------- */
+const eco=document.getElementById('st-eco');
+const N={cons:{x:550,y:280,w:240,h:100,t:'Consortium HashTag',s:'réseau commun des membres',ic:'i-shield',main:1},
+ soc:{x:550,y:70,w:200,h:64,t:'Société HashTag',s:'construit l\'outil',ic:'i-code'},
+ cie:{x:140,y:280,w:200,h:64,t:'Compagnies',s:'clientes principales',ic:'i-plane'},
+ pax:{x:140,y:70,w:200,h:64,t:'Passagers',s:'bénéficiaires indirects',ic:'i-user'},
+ iata:{x:550,y:490,w:200,h:64,t:'IATA',s:'règles et compensation',ic:'i-flag'},
+ apt:{x:960,y:280,w:200,h:64,t:'Aéroports',s:'cotisation réduite',ic:'i-split'},
+ gh:{x:960,y:490,w:200,h:64,t:'Sociétés au sol',s:'passent par l\'aéroport',ic:'i-truck'}};
+const E=[
+ ['M246 266L424 266','money','50 k€ / an + 0,02 € / valise',335,256,'middle'],
+ ['M424 294L246 294','gain','preuves, litiges tranchés',335,314,'middle'],
+ ['M854 266L676 266','money','30 k€ / an',765,256,'middle'],
+ ['M676 294L854 294','gain','preuve en cas d\'accusation',765,314,'middle'],
+ ['M535 224L535 108','money','paie le service',525,170,'end'],
+ ['M565 108L565 224','gain','logiciel et support',575,170,'start'],
+ ['M535 336L535 452','gain','verdicts',525,398,'end'],
+ ['M565 452L565 336','todo','reconnaissance officielle',575,398,'start'],
+ ['M444 505L140 505L140 318','money','chacun paie ses propres pertes',295,495,'middle'],
+ ['M140 242L140 108','gain','remboursement plus rapide',150,175,'start'],
+ ['M960 318L960 452','gain','accès au réseau, preuve de remise',950,385,'end']];
+const C={money:'var(--acc)',gain:'var(--ok)',todo:'var(--mute)'};
+const e2=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||eco).appendChild(e);return e};
+const defs=e2('defs',{});
+for(const[k,c]of Object.entries(C)){const m=e2('marker',{id:'st-m-'+k,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);e2('path',{d:'M0 0L10 5L0 10z',fill:c},m)}
+for(const[d,kind,label,lx,ly,anc]of E){
+ e2('path',{d,fill:'none',stroke:C[kind],'stroke-width':2,'stroke-linejoin':'round','stroke-dasharray':kind==='todo'?'5 5':'none','marker-end':`url(#st-m-${kind})`});
+ const tt=e2('text',{x:lx,y:ly+4,'text-anchor':anc,'font-size':12.5,fill:C[kind],'paint-order':'stroke',stroke:'var(--card)','stroke-width':5,'stroke-linejoin':'round','font-family':'Geist,sans-serif'});tt.textContent=label;
+}
+for(const n of Object.values(N)){
+ const g=e2('g',{});
+ e2('rect',{x:n.x-n.w/2,y:n.y-n.h/2,width:n.w,height:n.h,rx:12,fill:n.main?'var(--acc-soft)':'var(--card)',stroke:n.main?'color-mix(in srgb,var(--acc) 40%,transparent)':'var(--line)','stroke-width':n.main?2:1.5},g);
+ const ix=n.x-n.w/2+26;const s=e2('svg',{x:ix-11,y:n.y-11,width:22,height:22,viewBox:'0 0 24 24',class:'ic',stroke:n.main?'var(--acc)':'var(--ink2)'},g);e2('use',{href:'#'+n.ic},s);
+ const t1=e2('text',{x:ix+20,y:n.y-3,class:'lbl'},g);t1.textContent=n.t;if(n.main)t1.setAttribute('fill','var(--acc)');
+ const t2=e2('text',{x:ix+20,y:n.y+15,class:'xs'},g);t2.textContent=n.s;
+}
+window.STshow=()=>{build();setTimeout(play,250)};
+build();
+})();
+</script>
 
 <section class="view" id="v-livre-blanc">
 <div class="paper">
@@ -1699,9 +1882,9 @@ $('b-prev').onclick=()=>showB(bi-1);$('b-next').onclick=()=>showB(bi+1);$('bstag
 addEventListener('keydown',e=>{if(!$('v-bilan').classList.contains('on')||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();showB(bi+1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();showB(bi-1)}});
 
 function renderAll(){renderExplorer();renderKeys();renderConsole();renderMempool();renderChainViz();if(lastTag)track()}
-function route(){const v=(location.hash||'#intro').slice(1);const ok=['bilan','intro','demo','suivi','console','direct','explorateur','cles','livre-blanc','blockchain',...(window.PPAGES||[]).map(p=>p.id)].includes(v)?v:'intro';
+function route(){const v=(location.hash||'#intro').slice(1);const ok=['bilan','intro','demo','suivi','console','direct','explorateur','cles','livre-blanc','blockchain','strategie',...(window.PPAGES||[]).map(p=>p.id)].includes(v)?v:'intro';
  if(ok==='direct'){$('duo-left').appendChild($('console'));$('duo-right').appendChild($('suivi-body'))}else if(ok==='demo'){$('console-home').appendChild($('console'));$('demo-right').appendChild($('suivi-body'));if(D.raw){$('tag').value=D.raw;track()}}else{$('console-home').appendChild($('console'));$('suivi-home').appendChild($('suivi-body'))}
- document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+ok));document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));if(ok==='blockchain'){cvSel=null;setTimeout(renderChainViz,0)}if(ok==='bilan')showB(0);if(ok.startsWith('p-')&&window.PJshow)PJshow(ok);if(ok==='intro')startIntro();else if(typeof pauseP==='function')pauseP()}
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+ok));document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));if(ok==='blockchain'){cvSel=null;setTimeout(renderChainViz,0)}if(ok==='bilan')showB(0);if(ok==='strategie'&&window.STshow)STshow();if(ok.startsWith('p-')&&window.PJshow)PJshow(ok);if(ok==='intro')startIntro();else if(typeof pauseP==='function')pauseP()}
 addEventListener('hashchange',route);
 (async()=>{route();for(const r of ['LY12MA01','LY12MA02','LY12MA03'])await remember(r);const d=load();if(d)S=d;else{await genKeys();await seed()}honest=JSON.stringify(S.chain);
  $('tag').value='LY12MA01';renderAll();track();allTags().forEach(scheduleScan);await dNew();if((location.hash||'')!=='#demo')$('tag').value='LY12MA01',track();route()})();
