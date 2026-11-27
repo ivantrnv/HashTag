@@ -1108,7 +1108,8 @@ async function connectSupabase(SB){
   for(const k of Object.keys(PS))if(!seen.has(k)&&Date.now()-(PS[k].at||0)>20000){delete PS[k];ch.push(k)}
   if(ch.length)afterChange(ch)},30000);
 }
-window.PJsetName=n=>{n=(n||'').trim().slice(0,40);if(!n)return;localStorage.setItem(NKEY,n);me=n;document.querySelectorAll('[data-name]').forEach(f=>f.remove());if(cur)renderPage(cur)};
+document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closest('[data-name]');if(!f)return;e.preventDefault();PJsetName(f.querySelector('input').value)});
+window.PJsetName=n=>{n=(n||'').trim().slice(0,40);if(!n)return;try{localStorage.setItem(NKEY,n)}catch(e){}me=n;document.querySelectorAll('[data-name]').forEach(f=>f.remove());if(cur)renderPage(cur)};
 function goLocal(){try{PS=JSON.parse(localStorage.getItem(LKEY)||'{}')||{}}catch(e){PS={}}mode='';setMode('local')}
 
 /* ---------- noms et dates ---------- */
@@ -1129,7 +1130,7 @@ const num=s=>{const n=parseFloat(String(s).replace(/\s/g,'').replace(',','.'));r
 function renderPage(pid){
  const pg=PAGES.find(p=>p.id===pid);if(!pg)return;
  const hd=document.querySelector('#v-'+pid+' .pj-head');
- if(window.HASHTAG_SUPABASE&&!me&&hd&&!hd.querySelector('[data-name]')){hd.insertAdjacentHTML('afterend','<form data-name class="pj-b" style="display:flex;gap:12px;align-items:center;margin-bottom:16px;max-width:1080px"><span style="flex:1">Votre prénom, pour que le groupe sache qui a modifié quoi</span><input name="n" placeholder="Prénom" aria-label="Prénom" style="max-width:200px" required><button class="btn acc">OK</button></form>');hd.nextElementSibling.onsubmit=e=>{e.preventDefault();PJsetName(e.target.n.value)}}
+ if(window.HASHTAG_SUPABASE&&!me&&hd&&!hd.parentNode.querySelector('[data-name]')){hd.insertAdjacentHTML('afterend','<form data-name class="pj-b" style="display:flex;gap:12px;align-items:center;margin-bottom:16px;max-width:1080px"><span style="flex:1">Votre prénom, pour que le groupe sache qui a modifié quoi</span><input name="n" placeholder="Prénom" aria-label="Prénom" style="max-width:200px" required><button class="btn acc">OK</button></form>');}
  const box=document.getElementById('pc-'+pid);
  const extra=val('x-'+pid)||[];
  const ids=[...pg.blocks.map(b=>b.id),...extra.map(x=>x.id)];
