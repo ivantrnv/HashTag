@@ -646,10 +646,8 @@ window.HASHTAG_SUPABASE={url:'https://gorhimsemszorydaczrq.supabase.co',key:'sb_
 </style>
 <section class="view" id="v-strategie">
 <div class="st-card">
- <div class="st-top"><h2>Schéma de la solution</h2>
-  <div class="st-seg" role="group" aria-label="Scénario"><button class="on" data-st="ok"><svg class="i"><use href="#i-check"/></svg>Tout se passe bien</button><button data-st="lost"><svg class="i"><use href="#i-alert"/></svg>La valise se perd</button><button data-st="replay" aria-label="Rejouer"><svg class="i"><use href="#i-replay"/></svg></button></div></div>
- <svg class="st-svg" id="st-relay" viewBox="0 0 1100 430" role="img" aria-label="Relais de la valise entre le passager, la compagnie A, la société au sol, la compagnie B et le passager"></svg>
- <div class="st-note" id="st-relay-note"></div>
+ <div class="st-top"><h2>Schéma de la solution</h2></div>
+ <svg class="st-svg" id="st-relay" viewBox="0 0 1100 470" role="img" aria-label="Relais de la valise : à chaque passage, celui qui remet et celui qui reçoit signent, et la preuve va dans le registre commun"></svg>
 </div>
 </section>
 <script>
@@ -727,12 +725,19 @@ function play(){
   raf=requestAnimationFrame(step)};
  raf=requestAnimationFrame(step);
 }
-document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{
- if(b.dataset.st!=='replay'){mode=b.dataset.st;document.querySelectorAll('[data-st="ok"],[data-st="lost"]').forEach(x=>x.classList.toggle('on',x===b))}
- play()});
 
-window.STshow=()=>{build();setTimeout(play,250)};
-build();
+
+function still(){
+ build();for(let i=0;i<4;i++)light(i,2);
+ document.getElementById('st-bag').remove();document.getElementById('st-verdict').remove();
+ const g=el('g',{});
+ el('rect',{x:40,y:410,width:1020,height:48,rx:12,fill:'var(--bad-soft)',stroke:'color-mix(in srgb,var(--bad) 30%,transparent)'},g);
+ icon('i-alert',70,434,20,'var(--bad)',g);
+ const t=tx('Si la valise disparaît :',92,439,'lbl',g,'start');t.setAttribute('fill','var(--bad)');
+ tx('celui qui a signé « reçoit » sans signer « remet » ensuite est responsable, et c\'est lui qui paie.',254,439,'sm',g,'start').setAttribute('fill','var(--ink)');
+}
+window.STshow=still;
+still();
 })();
 </script>
 
