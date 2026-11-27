@@ -1500,7 +1500,8 @@ async function pump(){if(pumping)return;pumping=true;
  while(pool.length){const p=pool[0];for(let i=1;i<=NODES;i++){await wait(600);p.v=i;renderMempool()}
   await wait(250);const b=await commit(p.tx);pool.shift();onNewBlock(b);p.res(b)}
  pumping=false}
-function scheduleScan(t){const st=bagState(t);if(!st.pending||st.status!=='transit'||scanT[t])return;const {from,to}=st.pending;
+const MANUAL=true; // démonstration : le receveur signe la réception lui-même, pas de portique automatique
+function scheduleScan(t){if(MANUAL)return;const st=bagState(t);if(!st.pending||st.status!=='transit'||scanT[t])return;const {from,to}=st.pending;
  scanT[t]=setTimeout(async()=>{delete scanT[t];const now=bagState(t);if(!now.pending||now.pending.to!==to||pool.some(p=>p.tx.tag===t))return;
   const tx=await makeTx(await privFrom(S.keys[to].priv),{type:'ACCEPT',tag:t,from,to,signer:to,data:{via:'RFID',gate:GATE[to]}});submit(tx)},SCAN_MS);renderConsole()}
 function onNewBlock(b){flashH=b.height;selBlock=b.height;const tx=b.txs[0];if(tx.type==='OFFER')setTimeout(()=>scheduleScan(tx.tag),0);
@@ -1579,7 +1580,7 @@ async function track(){const raw=normKey($('tag').value);const out=$('track');la
  const ix=ROUTE.indexOf(st.holder);let P,C,N;
  if(st.status==='delivered'){P={id:'B',c:'ok',t:'Remise validée'};C={id:'PAX',c:'ok',t:'Livrée au passager'};N=null}
  else if(st.status==='lost'){P=ix>0?{id:ROUTE[ix-1],c:'ok',t:'Remise validée'}:{id:'PAX',c:'ok',t:'Dépôt au comptoir'};C={id:st.holder,c:'bad',t:'Valise perdue ici'};N={id:ROUTE[ix+1],c:'next',t:'Jamais reçue'}}
- else if(st.pending){P={id:st.pending.from,c:'ok',t:'Remise signée'};C={id:st.pending.to,c:'run',t:'Scan RFID en cours'};const n=ROUTE[ROUTE.indexOf(st.pending.to)+1];N=n?{id:n,c:'next',t:'À venir'}:null}
+ else if(st.pending){P={id:st.pending.from,c:'ok',t:'Remise signée'};C={id:st.pending.to,c:'run',t:'Réception à signer'};const n=ROUTE[ROUTE.indexOf(st.pending.to)+1];N=n?{id:n,c:'next',t:'À venir'}:null}
  else{P=ix>0?{id:ROUTE[ix-1],c:'ok',t:'Remise validée'}:{id:'PAX',c:'ok',t:'Dépôt au comptoir'};C={id:st.holder,c:'run',t:'La valise est ici'};N=ROUTE[ix+1]?{id:ROUTE[ix+1],c:'next',t:'À venir'}:null}
  const stIc={ok:'check',run:'clock',bad:'alert',next:'arrow'};
  const stepH=(lbl,x)=>x?`<div class="step ${x.c}"><small>${lbl}</small><div class="who">${actor(x.id)}</div><div class="st">${ic(stIc[x.c])}${x.t}</div></div>`:`<div class="step ok"><small>${lbl}</small><div class="who">Arrivée</div><div class="st">${ic('check')}Trajet terminé</div></div>`;
@@ -1614,9 +1615,9 @@ function renderConsole(){const c=$('console');
  c.innerHTML=`<div class="card who"><div><div style="font-weight:500">${actor(me)}</div><div class="mono note">${esc(S.keys[me].addr)}</div></div><div class="row"><span class="chip ok">${ic('check')}Clé privée vérifiée</span><button class="btn sm" id="c-out">Se déconnecter</button></div></div>
  <div class="msg" id="c-msg" style="margin:0 0 16px"></div>
  <div class="grid g-main"><div class="grid" style="align-content:start">
- <div class="card"><h2>Valises entrantes</h2>${incoming.length?incoming.map(x=>task(x,`Remise par ${actor(x.s.pending.from)}`)+`<div class="row"><span class="chip wait">Scan RFID en cours</span><button class="btn sm bad" data-act="refuse" data-t="${x.t}" ${busy?'disabled':''}>Refuser</button></div></div>`).join(''):'<p class="empty">Aucune valise entrante</p>'}</div>
+ <div class="card"><h2>Valises entrantes</h2>${incoming.length?incoming.map(x=>task(x,`Remise par ${actor(x.s.pending.from)}`)+`<div class="row"><button class="btn acc sm" data-act="accept" data-t="${x.t}" ${busy?'disabled':''}>${ic('check')}Signer la réception</button><button class="btn sm bad" data-act="refuse" data-t="${x.t}" ${busy?'disabled':''}>Refuser</button></div></div>`).join(''):'<p class="empty">Aucune valise entrante</p>'}</div>
  <div class="card"><h2>Sous votre garde</h2>${held.length?held.map(x=>task(x,'Vous êtes responsable')+`<div class="row">${me==='B'?`<button class="btn dark sm" data-act="deliver" data-t="${x.t}" ${busy?'disabled':''}>Livrer au passager</button>`:`<button class="btn dark sm" data-act="offer" data-t="${x.t}" ${busy?'disabled':''}>Remettre à ${esc(oname(next))}</button>`}</div></div>`).join(''):'<p class="empty">Aucune valise sous votre garde</p>'}
- ${waiting.length?`<h3 style="margin:16px 0 4px">En attente de l'autre partie</h3>`+waiting.map(x=>task(x,`Remise à ${actor(x.s.pending.to)}`)+'<span class="chip wait">Scan RFID en cours</span></div>').join(''):''}</div></div>
+ ${waiting.length?`<h3 style="margin:16px 0 4px">En attente de l'autre partie</h3>`+waiting.map(x=>task(x,`Remise à ${actor(x.s.pending.to)}`)+'<span class="chip wait">En attente de sa signature de réception</span></div>').join(''):''}</div></div>
  <div class="grid" style="align-content:start">
  ${keysCard()}
  ${me==='A'?`<div class="card"><h2>Enregistrer une valise</h2><label for="c-new" style="margin-top:0">Code de l'étiquette</label><input id="c-new" maxlength="11" placeholder="LY12MA04" autocapitalize="characters" spellcheck="false"><button class="btn acc" id="c-checkin" ${busy?'disabled':''} style="margin-top:12px;width:100%">Signer l'enregistrement</button></div>`:''}
@@ -1694,15 +1695,15 @@ $('f-global').onsubmit=async e=>{e.preventDefault();const q=$('q').value.trim().
 // ---------- démo guidée ----------
 const DSTEPS=[
  {t:'Enregistrement au comptoir',d:'Compagnie A signe l\'enregistrement',run:()=>dSign('A',{type:'CHECKIN',to:'A',data:{dest:'MAD'}}),end:'A'},
- {t:'Chargement à Lyon',d:'A remet, portique Sol Lyon scanne',run:()=>dHop('A','HL'),end:'HL'},
- {t:'Déchargement à Londres',d:'Sol Lyon remet, portique Sol Londres scanne',run:()=>dHop('HL','HK'),end:'HK'},
- {t:'Tri à Heathrow',d:'Sol Londres remet, portique du tri scanne',run:()=>dHop('HK','TRI'),end:'TRI'},
- {t:'Chargement vol B',d:'Tri Heathrow remet, portique soute B scanne',run:()=>dHop('TRI','B'),end:'B'},
+ {t:'Chargement à Lyon',d:'A remet, Sol Lyon signe la réception',run:()=>dHop('A','HL'),end:'HL'},
+ {t:'Déchargement à Londres',d:'Sol Lyon remet, Sol Londres signe la réception',run:()=>dHop('HL','HK'),end:'HK'},
+ {t:'Tri à Heathrow',d:'Sol Londres remet, le tri signe la réception',run:()=>dHop('HK','TRI'),end:'TRI'},
+ {t:'Chargement vol B',d:'Tri Heathrow remet, la soute B signe la réception',run:()=>dHop('TRI','B'),end:'B'},
  {t:'Livraison à Madrid',d:'Compagnie B signe la livraison',run:()=>dSign('B',{type:'DELIVERED',from:'B',to:'PAX'}),end:'PAX'}];
 let D={raw:null,tag:null,i:0,running:false,lost:false,auto:false};
 async function dSign(id,f){return submit(await makeTx(await privFrom(S.keys[id].priv),{...f,tag:D.tag,signer:id}))}
 async function untilHolder(id){for(let k=0;k<80;k++){if(bagState(D.tag).holder===id&&!bagState(D.tag).pending)return true;await wait(300)}return false}
-async function dHop(a,b){await dSign(a,{type:'OFFER',from:a,to:b});await untilHolder(b)}
+async function dHop(a,b){await dSign(a,{type:'OFFER',from:a,to:b});await dSign(b,{type:'ACCEPT',from:a,to:b});await untilHolder(b)}
 async function dNew(){let n=4,raw;do{raw='LY12MA'+String(n).padStart(2,'0');n++}while(n<100&&bagState(await sha(raw)).ev.length);
  D={raw,tag:await remember(raw),i:0,running:false,lost:false,auto:false};$('tag').value=raw;$('d-msg').className='msg';renderDemo();track()}
 function dMsg(t,k){const m=$('d-msg');m.className='msg on '+k;m.textContent=t}
