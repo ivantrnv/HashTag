@@ -979,6 +979,23 @@ button.pj-ph{cursor:pointer}button.pj-ph:hover{border-color:color-mix(in srgb,va
 .pj-log .d{font:13px "Geist Mono",monospace;color:var(--mute)}
 .btn.warn{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
 .pj-newsec{display:flex;gap:8px;padding:4px 0}
+/* Projet : une page = un document continu, sans cartes séparées */
+.pj-col{gap:0;max-width:960px}
+.pj-b{background:none;border:0;border-radius:0;box-shadow:none;padding:28px 0 4px;transition:background-color .15s var(--ease)}
+.pj-col>.pj-b:first-child,.pj-col>div:first-child+.pj-b{padding-top:8px}
+.pj-bh{margin-bottom:10px}
+.pj-bh h3{font-size:19px}
+.pj-b.ed{background:var(--raise);border-radius:12px;padding:20px 24px;margin:16px -24px 0;box-shadow:none;border:0}
+.pj-ebtn{opacity:0}
+.pj-b:hover .pj-ebtn,.pj-ebtn:focus-visible{opacity:1}
+.pj-stats{gap:0;border-bottom:1px solid var(--line);padding-bottom:20px}
+.pj-stat{border:0;border-radius:0;padding:0 24px 0 0}
+.pj-stat+.pj-stat{padding-left:24px;border-left:1px solid var(--line)}
+.pj-stat .v{font-size:28px}
+.pj-col .pj-stats+.pj-b{margin-top:0;padding-top:28px}
+.pj-newsec{padding-top:28px}
+@media(hover:none){.pj-ebtn{opacity:1}}
+@media(max-width:900px){.pj-stat,.pj-stat+.pj-stat{padding:12px 0;border-left:0}.pj-b.ed{margin:16px -12px 0;padding:16px 12px}}
 @media(max-width:900px){.pj-stats,.pj-out{grid-template-columns:repeat(2,minmax(0,1fr))}.pj-phases{grid-template-columns:minmax(0,1fr)}.pj-calc{grid-template-columns:minmax(0,1fr)}.pj-task{grid-template-columns:auto minmax(0,1fr)}.pj-tedit{grid-template-columns:minmax(0,1fr)}.pj-head{flex-direction:column}}
 </style>
 <script>
