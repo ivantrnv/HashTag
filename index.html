@@ -645,34 +645,11 @@ window.HASHTAG_SUPABASE={url:'https://gorhimsemszorydaczrq.supabase.co',key:'sb_
 @media(max-width:900px){.st-gains{grid-template-columns:minmax(0,1fr)}}
 </style>
 <section class="view" id="v-strategie">
-<div class="phead"><h1>Schéma de la solution</h1><p>La solution vue du terrain : qui remet la valise, qui la reçoit, qui garde la preuve et qui paie à la fin.</p></div>
-
 <div class="st-card">
- <div class="st-top"><h2>1. Le relais de la valise</h2>
+ <div class="st-top"><h2>Schéma de la solution</h2>
   <div class="st-seg" role="group" aria-label="Scénario"><button class="on" data-st="ok"><svg class="i"><use href="#i-check"/></svg>Tout se passe bien</button><button data-st="lost"><svg class="i"><use href="#i-alert"/></svg>La valise se perd</button><button data-st="replay" aria-label="Rejouer"><svg class="i"><use href="#i-replay"/></svg></button></div></div>
- <p class="st-sub">Comme un relais : à chaque passage, celui qui remet la valise et celui qui la reçoit signent tous les deux. Ces doubles signatures sont rangées dans un registre commun que personne ne peut effacer.</p>
  <svg class="st-svg" id="st-relay" viewBox="0 0 1100 430" role="img" aria-label="Relais de la valise entre le passager, la compagnie A, la société au sol, la compagnie B et le passager"></svg>
  <div class="st-note" id="st-relay-note"></div>
-</div>
-
-<div class="st-card">
- <div class="st-top"><h2>2. Qui fait quoi, qui paie qui</h2></div>
- <p class="st-sub">Au centre, le réseau commun. Aucune entreprise ne le possède : il appartient au consortium de ses membres. Autour, ce que chaque acteur donne et ce qu'il reçoit.</p>
- <svg class="st-svg" id="st-eco" viewBox="0 0 1100 540" role="img" aria-label="Écosystème HashTag : compagnies, aéroports, sociétés au sol, IATA, passagers et société HashTag autour du consortium"></svg>
- <div class="st-legend"><span><i style="border-color:var(--acc)"></i>Argent versé</span><span><i style="border-color:var(--ok)"></i>Ce que l'acteur reçoit</span><span><i style="border-color:var(--mute);border-top-style:dashed"></i>À négocier</span></div>
-</div>
-
-<div class="st-card">
- <div class="st-top"><h2>3. Ce que ça change pour chacun</h2></div>
- <div class="st-gains">
-  <div class="st-gain"><h3><svg class="i"><use href="#i-plane"/></svg>Compagnies</h3><p><b>Avant :</b> elles se partagent la facture selon les kilomètres volés, même quand elles n'y sont pour rien.</p><p><b>Avec HashTag :</b> chacune ne paie que les valises qu'elle a vraiment perdues.</p></div>
-  <div class="st-gain"><h3><svg class="i"><use href="#i-truck"/></svg>Aéroports et sociétés au sol</h3><p><b>Avant :</b> accusés sans preuve quand une valise disparaît au tri.</p><p><b>Avec HashTag :</b> ils prouvent qu'ils ont bien remis la valise, et voient où leurs tapis en perdent.</p></div>
-  <div class="st-gain"><h3><svg class="i"><use href="#i-user"/></svg>Passagers</h3><p><b>Avant :</b> ils attendent pendant que les compagnies se renvoient la faute.</p><p><b>Avec HashTag :</b> le responsable est connu tout de suite, le dossier avance plus vite.</p></div>
- </div>
-</div>
-
-<div class="st-card">
- <p class="st-one">En une phrase : <b>chaque main qui touche la valise signe</b>, le registre commun garde ces signatures, et <b>le dernier à l'avoir reçue sans la remettre paie</b>.</p>
 </div>
 </section>
 <script>
@@ -754,42 +731,6 @@ document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{
  if(b.dataset.st!=='replay'){mode=b.dataset.st;document.querySelectorAll('[data-st="ok"],[data-st="lost"]').forEach(x=>x.classList.toggle('on',x===b))}
  play()});
 
-/* ---------- écosystème ---------- */
-const eco=document.getElementById('st-eco');
-const N={cons:{x:550,y:280,w:240,h:100,t:'Consortium HashTag',s:'réseau commun des membres',ic:'i-shield',main:1},
- soc:{x:550,y:70,w:200,h:64,t:'Société HashTag',s:'construit l\'outil',ic:'i-code'},
- cie:{x:140,y:280,w:200,h:64,t:'Compagnies',s:'clientes principales',ic:'i-plane'},
- pax:{x:140,y:70,w:200,h:64,t:'Passagers',s:'bénéficiaires indirects',ic:'i-user'},
- iata:{x:550,y:490,w:200,h:64,t:'IATA',s:'règles et compensation',ic:'i-flag'},
- apt:{x:960,y:280,w:200,h:64,t:'Aéroports',s:'cotisation réduite',ic:'i-split'},
- gh:{x:960,y:490,w:200,h:64,t:'Sociétés au sol',s:'passent par l\'aéroport',ic:'i-truck'}};
-const E=[
- ['M246 266L424 266','money','50 k€ / an + 0,02 € / valise',335,256,'middle'],
- ['M424 294L246 294','gain','preuves, litiges tranchés',335,314,'middle'],
- ['M854 266L676 266','money','30 k€ / an',765,256,'middle'],
- ['M676 294L854 294','gain','preuve en cas d\'accusation',765,314,'middle'],
- ['M535 224L535 108','money','paie le service',525,170,'end'],
- ['M565 108L565 224','gain','logiciel et support',575,170,'start'],
- ['M535 336L535 452','gain','verdicts',525,398,'end'],
- ['M565 452L565 336','todo','reconnaissance officielle',575,398,'start'],
- ['M444 505L140 505L140 318','money','chacun paie ses propres pertes',295,495,'middle'],
- ['M140 242L140 108','gain','remboursement plus rapide',150,175,'start'],
- ['M960 318L960 452','gain','accès au réseau, preuve de remise',950,385,'end']];
-const C={money:'var(--acc)',gain:'var(--ok)',todo:'var(--mute)'};
-const e2=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||eco).appendChild(e);return e};
-const defs=e2('defs',{});
-for(const[k,c]of Object.entries(C)){const m=e2('marker',{id:'st-m-'+k,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);e2('path',{d:'M0 0L10 5L0 10z',fill:c},m)}
-for(const[d,kind,label,lx,ly,anc]of E){
- e2('path',{d,fill:'none',stroke:C[kind],'stroke-width':2,'stroke-linejoin':'round','stroke-dasharray':kind==='todo'?'5 5':'none','marker-end':`url(#st-m-${kind})`});
- const tt=e2('text',{x:lx,y:ly+4,'text-anchor':anc,'font-size':12.5,fill:C[kind],'paint-order':'stroke',stroke:'var(--card)','stroke-width':5,'stroke-linejoin':'round','font-family':'Geist,sans-serif'});tt.textContent=label;
-}
-for(const n of Object.values(N)){
- const g=e2('g',{});
- e2('rect',{x:n.x-n.w/2,y:n.y-n.h/2,width:n.w,height:n.h,rx:12,fill:n.main?'var(--acc-soft)':'var(--card)',stroke:n.main?'color-mix(in srgb,var(--acc) 40%,transparent)':'var(--line)','stroke-width':n.main?2:1.5},g);
- const ix=n.x-n.w/2+26;const s=e2('svg',{x:ix-11,y:n.y-11,width:22,height:22,viewBox:'0 0 24 24',class:'ic',stroke:n.main?'var(--acc)':'var(--ink2)'},g);e2('use',{href:'#'+n.ic},s);
- const t1=e2('text',{x:ix+20,y:n.y-3,class:'lbl'},g);t1.textContent=n.t;if(n.main)t1.setAttribute('fill','var(--acc)');
- const t2=e2('text',{x:ix+20,y:n.y+15,class:'xs'},g);t2.textContent=n.s;
-}
 window.STshow=()=>{build();setTimeout(play,250)};
 build();
 })();
