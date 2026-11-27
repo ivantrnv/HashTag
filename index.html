@@ -646,7 +646,8 @@ window.HASHTAG_SUPABASE={url:'https://gorhimsemszorydaczrq.supabase.co',key:'sb_
 </style>
 <section class="view" id="v-strategie">
 <div class="st-card">
- <div class="st-top"><h2>Schéma de la solution</h2></div>
+ <div class="st-top"><h2>Schéma de la solution</h2>
+  <div class="st-seg" role="tablist" aria-label="Scénario"><button class="on" role="tab" aria-selected="true" data-tab="ok"><svg class="i"><use href="#i-check"/></svg>Valise livrée</button><button role="tab" aria-selected="false" data-tab="lost"><svg class="i"><use href="#i-alert"/></svg>Valise perdue</button></div></div>
  <svg class="st-svg" id="st-relay" viewBox="0 0 1100 470" role="img" aria-label="Relais de la valise : à chaque passage, celui qui remet et celui qui reçoit signent, et la preuve va dans le registre commun"></svg>
 </div>
 </section>
@@ -727,15 +728,33 @@ function play(){
 }
 
 
+let stTab='ok';
 function still(){
- build();for(let i=0;i<4;i++)light(i,2);
- document.getElementById('st-bag').remove();document.getElementById('st-verdict').remove();
- const g=el('g',{});
+ build();document.getElementById('st-bag').remove();
+ const lost=stTab==='lost',g=el('g',{});
+ if(!lost){
+  for(let i=0;i<4;i++)light(i,2);
+  document.getElementById('st-verdict').remove();
+  document.getElementById('st-a4').querySelector('.ring').setAttribute('stroke','var(--ok)');
+  el('rect',{x:40,y:410,width:1020,height:48,rx:12,fill:'var(--ok-soft)',stroke:'color-mix(in srgb,var(--ok) 30%,transparent)'},g);
+  icon('i-check',70,434,20,'var(--ok)',g);
+  tx('Valise livrée :',92,439,'lbl',g,'start').setAttribute('fill','var(--ok)');
+  tx('4 remises, 4 doubles signatures, 4 preuves dans le registre. Il n\'y a rien à régler.',204,439,'sm',g,'start').setAttribute('fill','var(--ink)');
+  return}
+ // valise perdue au hub : la société au sol l'a reçue, personne ne l'a reçue après elle
+ light(0,2);light(1,2);
+ const h=document.getElementById('st-h2');h.setAttribute('opacity',1);
+ h.querySelector('.hb').setAttribute('stroke','var(--bad)');h.querySelector('.hb').setAttribute('fill','var(--bad-soft)');
+ h.querySelector('.s1').setAttribute('fill','var(--bad)');h.querySelector('.s2').setAttribute('fill','var(--bad)');
+ const x=(ACT[2].x+ACT[3].x)/2;tx('aucune signature',x,Y-70,'xs',svg).setAttribute('fill','var(--bad)');
+ document.getElementById('st-a2').querySelector('.ring').setAttribute('stroke','var(--bad)');
+ for(const k of [3,4])document.getElementById('st-a'+k).setAttribute('opacity',.35);
  el('rect',{x:40,y:410,width:1020,height:48,rx:12,fill:'var(--bad-soft)',stroke:'color-mix(in srgb,var(--bad) 30%,transparent)'},g);
  icon('i-alert',70,434,20,'var(--bad)',g);
- const t=tx('Si la valise disparaît :',92,439,'lbl',g,'start');t.setAttribute('fill','var(--bad)');
- tx('celui qui a signé « reçoit » sans signer « remet » ensuite est responsable, et c\'est lui qui paie.',254,439,'sm',g,'start').setAttribute('fill','var(--ink)');
+ tx('Valise perdue au hub :',92,439,'lbl',g,'start').setAttribute('fill','var(--bad)');
+ tx('la société au sol a signé « reçoit » mais personne n\'a signé après elle. Le registre la désigne : elle paie.',262,439,'sm',g,'start').setAttribute('fill','var(--ink)');
 }
+document.querySelectorAll('#v-strategie [data-tab]').forEach(b=>b.onclick=()=>{stTab=b.dataset.tab;document.querySelectorAll('#v-strategie [data-tab]').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});still()});
 window.STshow=still;
 still();
 })();
